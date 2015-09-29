@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@yield('title')</title>
-     <link href="{{asset("public/template/edmin/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet">
-     <link href="{{asset("public/template/edmin/bootstrap/css/bootstrap-responsive.min.css")}}" rel="stylesheet">
-     <link href="{{asset("public/template/edmin/css/theme.css")}}" rel="stylesheet">
-     <link href="{{asset("public/template/edmin/images/icons/css/font-awesome.css")}}" rel="stylesheet">
-</head>
-<body>
+@include('backend.header')
  <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -45,13 +34,13 @@
 <div class="span3">
   <div class="sidebar">
     <ul class="widget widget-menu unstyled">
-      <li class="#"> <a href="#"> <i class="menu-icon icon-dashboard"></i> Dashboard </a> </li>
+      <li class="@if(Request::segment(1)== 'dashboard') {{ 'active' }} @endif"> <a href="{{ url('/dashboard/') }}"> <i class="menu-icon icon-dashboard"></i> Dashboard </a> </li>
       <li class="@if(Request::segment(1)== 'user') {{ 'active' }} @endif"> <a href="{{ url('/user/') }}"> <i class="menu-icon icon-user"></i> Users </a></li>
-      <li class="#"> <a href="#"> <i class="menu-icon icon-tags"></i> Categories </a></li>
-      <li class="#"> <a href="#"> <i class="menu-icon icon-book"></i> Articles </a></li>
-       <li class="#"> <a href="#"> <i class="menu-icon icon-check"></i> Status </a> </li>
-    <li class="#"> <a href="#"> <i class="menu-icon icon-picture"></i> Gallery </a> </li>
-     <li class="#"> <a href="#"> <i class="menu-icon icon-file"></i> Uploads Image </a> </li>
+      <li class="@if(Request::segment(1)== 'cat') {{ 'active' }} @endif"> <a href="{{ url('/cat/') }}"> <i class="menu-icon icon-tags"></i> Categories </a></li>
+      <li class="@if(Request::segment(1)== 'art') {{ 'active' }} @endif"> <a href="{{ url('/art/') }}"> <i class="menu-icon icon-book"></i> Articles </a></li>
+       <li class="@if(Request::segment(1)== 'status') {{ 'active' }} @endif"> <a href="{{ url('/status/') }}"> <i class="menu-icon icon-check"></i> Status </a> </li>
+    <li class="@if(Request::segment(1)== 'gallery') {{ 'active' }} @endif"> <a href="{{ url('/gallery/') }}"> <i class="menu-icon icon-picture"></i> Gallery </a> </li>
+     <li class="@if(Request::segment(1)== 'upload') {{ 'active' }} @endif"> <a href="{{ url('/upload/') }}"> <i class="menu-icon icon-file"></i> Uploads Image </a> </li>
     </ul>
   </div>
   <!--/.sidebar-->
@@ -101,14 +90,4 @@
 			</div>
 		</div><!--/.container-->
 	</div><!--/.wrapper-->
-<div class="footer">
-		<div class="container">
-			<b class="copyright">&copy; CMS Admin {{ date('Y') }}. Template by Edmin - EGrappler.com </b> All rights reserved.
-		</div>
-	</div>
-    <script type="application/javascript" src="{{asset("public/template/edmin/scripts/jquery-1.9.1.min.js")}}"></script>
-    <script type="application/javascript" src="{{asset("public/template/edmin/scripts/jquery-ui-1.10.1.custom.min.js")}}"></script>
-    <script type="application/javascript" src="{{asset("public/template/edmin/bootstrap/js/bootstrap.min.js")}}"></script>
-    <script type="application/javascript" src="{{asset("public/template/edmin/scripts/common.js")}}"></script>
-      @yield('other')
-</body>
+@include('backend.footer')

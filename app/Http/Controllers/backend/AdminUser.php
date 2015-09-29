@@ -98,7 +98,7 @@ var $rules = array('txt_usrpic'=>'required|image|mimes:jpeg,jpg,bmp,png,gif|max:
 		$users->password = Hash::make(Input::get('txt_pass'));
 		$users->status = Input::get('cb_status');
 		$users->id_grp = Input::get('cb_usergrp');
-		$users->addby = 'imam';
+		$users->addby = Session::get('usrid');
 		$users->foto = $usrpic;
 		
 		if ($users->save())
@@ -156,7 +156,7 @@ var $rules = array('txt_usrpic'=>'required|image|mimes:jpeg,jpg,bmp,png,gif|max:
 	{
 		//$users =  m_user::GetByUserID($usrid)->first();
 		$users =  m_user::find($usrid);
-		$page_title = "Add User";
+		$page_title = "Edit User";
 		$title = "Admin - Edit User ".$usrid;
 		$button_name = "Update User";
 		$url = 'user/updateUser';
@@ -241,7 +241,7 @@ var $rules = array('txt_usrpic'=>'required|image|mimes:jpeg,jpg,bmp,png,gif|max:
 			}
 		$users->status = Input::get('cb_status');
 		$users->id_grp = Input::get('cb_usergrp');
-		$users->chby = 'imam';
+		$users->chby = Session::get('usrid');
 		if ($image) 
 			{
 				$users->foto = $usrpic;
@@ -289,7 +289,7 @@ var $rules = array('txt_usrpic'=>'required|image|mimes:jpeg,jpg,bmp,png,gif|max:
 			Session::put('usrid',$usrid );
 			Session::put('usrfoto',$users->foto);
 			
-			return Redirect::to('/user/');
+			return Redirect::to('/dashboard/');
 		}
 		return Redirect::to('user/loginUser')->with('error','Could not log in, please check your username and password');
 		
@@ -301,6 +301,25 @@ var $rules = array('txt_usrpic'=>'required|image|mimes:jpeg,jpg,bmp,png,gif|max:
 		$request->session()->flush();
 		Auth::logout();
 		return Redirect::to('user/loginUser')->with('success', 'Succesfully logout');
+    }
+	
+	 public function forgetPass()
+    {
+		return view('backend.formforgotpass');
+    }
+	
+	public function sendPass(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+            'txt_email' => 'required|email',
+        ]);
+		$validator->setAttributeNames($this->niceNames); 
+
+        if ($validator->fails()) {
+            return redirect('user/forgetPass')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
     }
 }
 ?>
