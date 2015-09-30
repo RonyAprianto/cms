@@ -45,7 +45,12 @@ public function display_status($code)
 	return $row->desc;      
 }
 	
-	
+// By Rony 30092015	
+ public function get_today($today = '') 
+ {
+        $today = date('d F Y');
+        return $today;
+}	
 	
 	
 	
